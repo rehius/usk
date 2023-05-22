@@ -39,9 +39,6 @@ jobs:
         run: |
           ln -s $PICO_SDK_PATH/external/pico_sdk_import.cmake $GITHUB_WORKSPACE/busk/pico_sdk_import.cmake
           ln -s $PICO_SDK_PATH/external/pico_sdk_import.cmake $GITHUB_WORKSPACE/usk/pico_sdk_import.cmake
-      - name: Create symbolic link of pins.h in busk sources
-        run: |
-          ln -s $GITHUB_WORKSPACE/usk/pins.h $GITHUB_WORKSPACE/busk/pins.h
       - name: Create 'generated' directory in usk source directory
         run: mkdir -p $GITHUB_WORKSPACE/usk/generated
 
