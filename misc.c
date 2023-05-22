@@ -73,8 +73,11 @@ void halt_with_error(uint32_t err, uint32_t bits)
     pio_set_sm_mask_enabled(pio1, 0xF, false);
     set_sys_clock_khz(48000, true);
     vreg_set_voltage(VREG_VOLTAGE_0_95);
-    put_pixel(0);
-    sleep_ms(PAUSE_BEFORE);
+    if (bits != 1)
+    {
+        put_pixel(0);
+        sleep_ms(PAUSE_BEFORE);
+    }
     for(int j = 0; j < CODE_REPEATS; j++)
     {
         for(int i = 0; i < bits; i++)
