@@ -69,7 +69,9 @@ jobs:
       - name: Generate release tag
         id: tag
         run: |
-          USK_VERSION=$(sed -n 's/pico_set_program_version(usk "\([0-9.]*\)")/\1/p' $GITHUB_WORKSPACE/usk/CMakeLists.txt)
+          USK_VERSION_LO=$(sed -n 's/#define VER_LO \([0-9]*\)/\1/p' $GITHUB_WORKSPACE/usk/config.h)
+          USK_VERSION_HI=$(sed -n 's/#define VER_HI \([0-9]*\)/\1/p' $GITHUB_WORKSPACE/usk/config.h)
+          USK_VERSION=${USK_VERSION_HI}.${USK_VERSION_LO}
           RELEASE_TAG=PicoFly_${USK_VERSION}_$(date +"%Y.%m.%d_%H-%M")
           echo "release_tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
           echo "release_tag=$RELEASE_TAG"
