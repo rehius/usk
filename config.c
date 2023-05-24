@@ -81,7 +81,7 @@ void add_boot_record(int offset) {
     if (is_locked()) {
         return;
     }
-    uint32_t buf[64];
+    uint32_t buf[256];
     memcpy(buf, flash_cfg + CONFIG_IDX(offset) * 256, 256);
     for (int i = 0; i < 64; i++) {
         if (buf[i] != 0) {
