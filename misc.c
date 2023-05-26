@@ -84,8 +84,12 @@ void halt_with_error(uint32_t err, uint32_t bits)
         {
             bool is_long = err & (1 << (bits - i - 1));
             sleep_ms(is_long ? LONG_PAUSE_TIME : SHORT_PAUSE_TIME);
-            put_pixel(PIX_yel);
-            sleep_ms(is_long ? LONG_TIME : SHORT_TIME);
+            bool success = bits == 1 && is_long == 0;
+            if (success)
+                put_pixel(PIX_whi);
+            else
+                put_pixel(PIX_yel);
+            sleep_ms(is_long ? LONG_TIME : success ? SHORT_TIME * 2 : SHORT_TIME);
             put_pixel(0);
             if (i != bits - 1 || j != CODE_REPEATS - 1)
                 sleep_ms(is_long ? LONG_PAUSE_TIME : SHORT_PAUSE_TIME);
