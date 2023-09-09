@@ -23,23 +23,13 @@ extern int ws_pio_offset;
 #define GPIO_IE PADS_BANK0_GPIO0_IE_BITS
 #define GPIO_OD_PD (GPIO_OD | PADS_BANK0_GPIO0_PDE_BITS)
 
-#define PTR_SAFE_RAM4 (void*)0x20040200
-
 typedef void nopar();
 
 void __not_in_flash_func(zzz)() {
-    static bool not_first = 0;
-    if(!not_first)
-    {
-        not_first = 1;
-        memcpy(PTR_SAFE_RAM4, (void*)((uint32_t)zzz - 1), 0x200);
-        ((nopar*)(PTR_SAFE_RAM4 + 1))();
-    }
     *(uint32_t*)(0x4000803C + 0x3000) = 1;  // go to 12 MHz
     uint32_t * vreg = (uint32_t*)0x40064000;
     vreg[1] &= ~1;  // disable brownout
     *(uint32_t*)0x40060000 = 0x00d1e000; // disable rosc
-    *(uint32_t*)0x40004018 = 0xFF ^ (1 << 4);  // disable SRAMs except ours
     vreg[0] = 1;    // lowest possible power
     *(uint32_t*)0x40024000 = 0x00d1e000; // disable xosc
     while(1);
