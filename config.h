@@ -1,5 +1,5 @@
 #include "hardware/flash.h"
-#define OFFSET_DIV 10
+#define OFFSET_DIV 8
 #define OFFSET_MIN 6200
 #define OFFSET_MAX 6900
 
